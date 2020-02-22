@@ -54,16 +54,18 @@ fun Application.module(testing: Boolean = false) {
 
 
     val correlationId = "x-correlation-id"
-    install(CallLogging){
-        mdc(correlationId) { // call: ApplicationCall ->
+    install(CallLogging) {
+        mdc(correlationId) {
+            // call: ApplicationCall ->
             it.request.headers[correlationId]
         }
-        mdc("requestId") { // call: ApplicationCall ->
-           UUID.randomUUID().toString()
+        mdc("requestId") {
+            // call: ApplicationCall ->
+            UUID.randomUUID().toString()
         }
     }
 
-    if(!isDev){
+    if (!isDev) {
         install(DropwizardMetrics) {
             val reporter = Slf4jReporter.forRegistry(registry)
                 .outputTo(log)
@@ -106,7 +108,7 @@ class MainModule(private val application: Application) : AbstractModule() {
     }
 }
 
-class TodoModule(): AbstractModule(){
+class TodoModule() : AbstractModule() {
     override fun configure() {
         bind(TodoRoutes::class.java).asEagerSingleton()
 

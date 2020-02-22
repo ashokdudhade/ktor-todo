@@ -68,11 +68,11 @@ class DAOFacadeDatabase(val db: Database = Database.connect("jdbc:h2:mem:test", 
 
     private fun getLables(todoId: Int): List<TodoLabel> {
         return db.transaction {
-            (UserTodoLabels innerJoin  TodoLabels).slice(TodoLabels.todoId, UserTodoLabels.label )
-                .select{UserTodoLabels.id.eq(TodoLabels.labelId) and TodoLabels.todoId.eq(todoId)}
+            (UserTodoLabels innerJoin TodoLabels).slice(TodoLabels.todoId, UserTodoLabels.label)
+                .select { UserTodoLabels.id.eq(TodoLabels.labelId) and TodoLabels.todoId.eq(todoId) }
                 .map {
-                TodoLabel(id=it[TodoLabels.id], name=it[UserTodoLabels.label])
-            }
+                    TodoLabel(id = it[TodoLabels.id], name = it[UserTodoLabels.label])
+                }
         }
     }
 
@@ -113,8 +113,7 @@ class DAOFacadeDatabase(val db: Database = Database.connect("jdbc:h2:mem:test", 
 
             }
 
-            TodoLabels.batchInsert(lableIds){
-                lableId ->
+            TodoLabels.batchInsert(lableIds) { lableId ->
                 this[TodoLabels.labelId] = lableId
                 this[TodoLabels.todoId] = id
             }

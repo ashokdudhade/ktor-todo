@@ -14,40 +14,40 @@ import io.ktor.routing.*
 class TodoRoutes @Inject constructor(application: Application, todoService: TodoService) {
     init {
         application.routing {
-            get("/todo"){
+            get("/todo") {
                 call.respond("todo get")
             }
-            get("/todos"){
+            get("/todos") {
                 val userId = call.request.header("userId")
-                if(userId !=null) {
+                if (userId != null) {
                     val todos = todoService.getAllTodos(userId)
 
 
                     call.respond(todos)
-                }else{
+                } else {
                     call.respond(HttpStatusCode.BadRequest, "Bad request")
                 }
 
 
             }
-            put("/todo"){
+            put("/todo") {
                 val todo = call.receive<Todo>()
                 val userId = call.request.header("userId")
-                if(userId !=null) {
+                if (userId != null) {
                     val todo1 = todoService.createTodo(userId, todo.text, todo.labels.map { it.id })
 
 
                     call.respond(todo1)
-                }else{
+                } else {
                     call.respond(HttpStatusCode.BadRequest, "Bad request")
                 }
             }
 
-            post("/todo"){
+            post("/todo") {
                 call.respond("todo post")
             }
 
-            patch("/todo"){
+            patch("/todo") {
                 val todo = call.receive<Todo>()
 
                 val updatedTodo = todoService.updateTodo(todo)
