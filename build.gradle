@@ -1,4 +1,7 @@
 buildscript {
+    ext.guice_version = '4.1.0'
+    ext.mockk_version = '1.9.3'
+
     repositories {
         jcenter()
     }
@@ -46,8 +49,9 @@ dependencies {
     implementation "net.logstash.logback:logstash-logback-encoder:5.1"
     implementation "io.ktor:ktor-html-builder:$ktor_version"
     implementation "io.ktor:ktor-metrics:$ktor_version"
-
-
+    implementation "com.google.inject:guice:$guice_version"
+    implementation "ch.qos.logback.contrib:logback-json-classic:0.1.5"
+    testImplementation "io.mockk:mockk:$mockk_version"
 
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
 }
